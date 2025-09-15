@@ -1,6 +1,5 @@
 [
-  { "username": "Admin@giftzbash.com", "password": "giftzbashofficialadmin", "role": "admin" },
-  { "username": "seller1@giftzbash.com", "password": "sellerpass123", "role": "seller" },
-  { "username": "seller2@giftzbash.com", "password": "mypassword456", "role": "seller" },
-  { "username": "Offical@giftzbash.com", "password": "giftz123456789", "role":"seller"}
+  { "username": "admin1", "password": "giftzbashofficialadmin", "role": "admin" },
+  { "username": "seller1", "password": "sellerpass123", "role": "seller" },
+  { "username": "seller2", "password": "mypassword456", "role": "seller" }
 ]

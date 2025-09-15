@@ -1,84 +1,52 @@
-// Show status messages in this element
-const statusEl = document.getElementById('status');
-const container = document.getElementById('user-table-container');
+fetch('/api/users')
+  .then(res => res.json())
+  .then(users => renderTable(users))
+  .catch(err => {
+    document.getElementById('user-table-container').innerText = "Error loading users.";
+    console.error("Fetch error:", err);
+  });
 
-function loadUsers() {
-  statusEl.textContent = 'Loading users...';
+function renderTable(users) {
+  const container = document.getElementById('user-table-container');
+  let html = `<table>
+                <tr>
+                  <th>Username</th>
+                  <th>Role</th>
+                  <th>New Password</th>
+                  <th>Action</th>
+                </tr>`;
 
-  fetch('http://127.0.0.1:5000/api/users')
-    .then(response => {
-      if (!response.ok) throw new Error(`Server error: ${response.status}`);
-      return response.json();
-    })
-    .then(users => {
-      statusEl.textContent = '✅ Users loaded successfully';
-      renderUsers(users);
-    })
-    .catch(err => {
-      statusEl.textContent = '❌ Error loading users: ' + err.message;
-      container.innerHTML = '';
-    });
+  users.forEach((user, index) => {
+    html += `<tr>
+              <td>${user.username}</td>
+              <td>${user.role}</td>
+              <td><input type="password" id="pass-${index}" /></td>
+              <td><button onclick="updatePassword('${user.username}', ${index})">Update</button></td>
+            </tr>`;
+  });
+
+  html += `</table>`;
+  container.innerHTML = html;
 }
 
-function renderUsers(users) {
-  if (!Array.isArray(users) || users.length === 0) {
-    container.innerHTML = '<p>No users found.</p>';
+function updatePassword(username, index) {
+  const password = document.getElementById(`pass-${index}`).value;
+  if (password.length < 5) {
+    alert("Password must be at least 5 characters.");
     return;
   }
 
-  const table = document.createElement('table');
-  table.innerHTML = `
-    <thead>
-      <tr>
-        <th>Username</th>
-        <th>Password</th>
-        <th>Role</th>
-        <th>New Password</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      ${users.map((user, index) => `
-        <tr>
-          <td>${user.username}</td>
-          <td>${user.password}</td>
-          <td>${user.role}</td>
-          <td><input type="password" id="newpass-${index}" placeholder="New password" /></td>
-          <td><button onclick="changePassword('${user.username}', ${index})">Change</button></td>
-        </tr>
-      `).join('')}
-    </tbody>
-  `;
-  container.innerHTML = '';
-  container.appendChild(table);
-}
-
-function changePassword(username, index) {
-  const newPass = document.getElementById(`newpass-${index}`).value.trim();
-  if (!newPass) {
-    alert('Please enter a new password.');
-    return;
-  }
-
-  fetch('http://127.0.0.1:5000/api/update-password', {
+  fetch('/api/update-password', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ username, password: newPass })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password })
   })
-  .then(response => {
-    if (!response.ok) throw new Error(`Server error: ${response.status}`);
-    return response.json();
-  })
+  .then(res => res.json())
   .then(data => {
     alert(data.message);
-    loadUsers(); // Refresh user list to show updated passwords
   })
   .catch(err => {
-    alert('Error updating password: ' + err.message);
+    console.error("Update error:", err);
+    alert("Failed to update password.");
   });
 }
-
-// Run loadUsers once page loads
-window.onload = loadUsers;
