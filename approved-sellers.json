@@ -1,0 +1,17 @@
+[
+  {
+    "email": "seller1@example.com",
+    "password": "password123",
+    "name": "Seller One"
+  },
+  {
+    "email": "seller2@example.com",
+    "password": "secure456",
+    "name": "Seller Two"
+  },
+  {
+   "email":"Official@giftzbash.com",
+   "password":"Giftzbashofficial123456789",
+   "name":"GiftzBash"
+  }
+  ]

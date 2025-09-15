@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seller Dashboard – GiftsBash</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0fff4;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            background-color: #2e7d32;
+            color: white;
+            padding: 20px;
+        }
+
+        h1 {
+            font-family: 'Brush Script MT', cursive;
+            color: #fdd835;
+            margin: 0;
+        }
+
+        .dashboard {
+            margin-top: 40px;
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #d32f2f;
+            }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>GiftsBash Seller Dashboard</h1>
+    </header>
+
+    <div class="dashboard">
+        <h2>Welcome, <span id="seller-name">Seller</span>!</h2>
+        <p>You are now logged in as a verified seller 🎉</p>
+
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        const sellerEmail = localStorage.getItem('currentSeller');
+
+        if (!sellerEmail) {
+            alert("Access denied. Please log in first.");
+            window.location.href = "giftzbash.html"; // Redirect to login/home
+        } else {
+            document.getElementById('seller-name').textContent = sellerEmail;
+        }
+
+        function logout() {
+            localStorage.removeItem('currentSeller');
+            alert("Logged out successfully.");
+            window.location.href = "giftzbash.html";
+        }
+    </script>
+
+</body>
+</html>

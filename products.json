@@ -1,0 +1,11 @@
+{
+  "seller1@example.com": [
+    {
+      "name": "Custom Mug",
+      "price": 12.99,
+      "image": "https://example.com/mug.jpg",
+      "description": "A personalized coffee mug."
+    }
+  ],
+  "seller2@example.com": []
+}
