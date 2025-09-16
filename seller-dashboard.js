@@ -1,43 +1,26 @@
-function loadProducts() {
-  fetch('https://giftsbash.onrender.com/api/products')
+document.getElementById("seller-form").addEventListener("submit", e => {
+  e.preventDefault();
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  fetch("https://giftsbash.onrender.com/api/users")
     .then(res => res.json())
-    .then(products => {
-      const list = document.getElementById("product-list");
-      if (products.length === 0) {
-        list.innerHTML = "<p>No products yet.</p>";
-        return;
+    .then(users => {
+      const seller = users.find(
+        u => u.username.toLowerCase() === username.toLowerCase() &&
+             u.password === password &&
+             u.role === "seller"
+      );
+
+      if (seller) {
+        alert(`Welcome, ${seller.username}! Redirecting...`);
+        window.location.href = "seller-dashboard.html";
+      } else {
+        alert("❌ Invalid seller credentials.");
       }
-      list.innerHTML = "";
-      products.forEach((p, i) => {
-        const div = document.createElement("div");
-        div.textContent = `${p.name} – $${p.price}`;
-        list.appendChild(div);
-      });
     })
     .catch(err => {
-      console.error("Error loading products:", err);
+      console.error("Login error:", err);
+      alert("⚠️ Could not reach the server. Try again.");
     });
-}
-
-document.getElementById("add-product-form").addEventListener("submit", e => {
-  e.preventDefault();
-  const name = document.getElementById("product-name").value;
-  const price = document.getElementById("product-price").value;
-
-  fetch('https://giftsbash.onrender.com/api/add-product', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, price })
-  })
-  .then(res => res.json())
-  .then(data => {
-    alert(data.message);
-    loadProducts();
-  })
-  .catch(err => {
-    console.error("Error adding product:", err);
-    alert("Failed to add product.");
-  });
 });
-
-loadProducts();
