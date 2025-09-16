@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard – GiftzBash</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <script>
+    // 🔒 Redirect if not logged in
+    if (sessionStorage.getItem("isAdmin") !== "true") {
+      window.location.href = "admin-login.html";
+    }
+  </script>
+
+  <h2>👨‍💼 Admin – Manage Users</h2>
+  <button onclick="logout()">🚪 Logout</button>
+  <div id="user-table-container">Loading...</div>
+
+  <script src="manage-users.js"></script>
+  <script>
+    function logout() {
+      sessionStorage.removeItem("isAdmin");
+      window.location.href = "admin-login.html";
+    }
+  </script>
+</body>
+</html>
