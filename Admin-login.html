@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Login – GiftzBash</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h2>🔐 Admin Login</h2>
+  <form id="admin-form">
+    <input type="text" id="username" placeholder="Admin Username" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button type="submit">Login</button>
+  </form>
+
+  <script>
+    document.getElementById("admin-form").addEventListener("submit", e => {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      fetch("/api/users")
+        .then(res => res.json())
+        .then(users => {
+          const admin = users.find(u => u.username === username && u.password === password && u.role === "admin");
+          if (admin) {
+            sessionStorage.setItem("isAdmin", "true");
+            alert("✅ Welcome Admin!");
+            window.location.href = "admin-dashboard.html";
+          } else {
+            alert("❌ Invalid credentials.");
+          }
+        });
+    });
+  </script>
+</body>
+</html>
