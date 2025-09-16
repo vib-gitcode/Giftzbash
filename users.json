@@ -1,5 +1,5 @@
 [
-  { "username": "admin1", "password": "giftzbashofficialadmin", "role": "admin" },
+  { "username": "adminofficial", "password": "giftzbashofficialadmin", "role": "admin" },
   { "username": "seller1", "password": "sellerpass123", "role": "seller" },
   { "username": "seller2", "password": "mypassword456", "role": "seller" }
 ]
