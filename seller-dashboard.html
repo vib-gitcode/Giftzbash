@@ -6,6 +6,12 @@
   <link rel="stylesheet" href="static/styles.css" />
 </head>
 <body>
+  <script>
+    // Redirect to login if seller is not logged in
+    if (sessionStorage.getItem("sellerLoggedIn") !== "true") {
+      window.location.href = "seller-login.html";
+    }
+  </script>
   <h2>📦 Seller Dashboard</h2>
   <form id="add-product-form">
     <input type="text" id="product-name" placeholder="Product Name" required />
