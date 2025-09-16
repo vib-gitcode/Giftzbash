@@ -10,6 +10,10 @@ document.getElementById("seller-form").addEventListener("submit", e => {
         u => u.username === username && u.password === password && u.role === "seller"
       );
       if (seller) {
+        // Save login state
+        sessionStorage.setItem("sellerLoggedIn", "true");
+        sessionStorage.setItem("sellerUsername", seller.username);
+
         alert("Login successful! Redirecting to Seller Dashboard...");
         window.location.href = "seller-dashboard.html";
       } else {
