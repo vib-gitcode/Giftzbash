@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  fetch('/api/products')
+  fetch('https://giftsbash.onrender.com/api/products')
     .then(res => res.json())
     .then(gifts => {
       const container = document.getElementById("gift-list");
@@ -12,5 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
         div.textContent = `${g.name} – $${g.price}`;
         container.appendChild(div);
       });
+    })
+    .catch(err => {
+      console.error("Error loading products:", err);
     });
 });
