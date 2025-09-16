@@ -1,4 +1,4 @@
-fetch('/api/users')
+fetch('https://giftsbash.onrender.com/api/users')
   .then(res => res.json())
   .then(users => renderTable(users))
   .catch(err => {
@@ -36,7 +36,7 @@ function updatePassword(username, index) {
     return;
   }
 
-  fetch('/api/update-password', {
+  fetch('https://giftsbash.onrender.com/api/update-password', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username, password })
