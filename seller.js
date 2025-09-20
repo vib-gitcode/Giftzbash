@@ -1,27 +1,26 @@
 document.getElementById("seller-form").addEventListener("submit", e => {
   e.preventDefault();
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
 
   fetch("https://giftsbash.onrender.com/api/users")
     .then(res => res.json())
     .then(users => {
       const seller = users.find(
-        u => u.username === username && u.password === password && u.role === "seller"
+        u => u.username.toLowerCase() === username.toLowerCase() &&
+             u.password === password &&
+             u.role === "seller"
       );
-      if (seller) {
-        // Save login state
-        sessionStorage.setItem("sellerLoggedIn", "true");
-        sessionStorage.setItem("sellerUsername", seller.username);
 
-        alert("Login successful! Redirecting to Seller Dashboard...");
+      if (seller) {
+        alert(`✅ Welcome, ${seller.username}! Redirecting...`);
         window.location.href = "seller-dashboard.html";
       } else {
-        alert("Invalid credentials.");
+        alert("❌ Invalid seller credentials.");
       }
     })
     .catch(err => {
-      console.error("Error during login:", err);
-      alert("Server error. Please try again later.");
+      console.error("Login error:", err);
+      alert("⚠️ Could not reach the server. Try again.");
     });
 });
